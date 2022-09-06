@@ -1,0 +1,45 @@
+version: '3.3'
+
+services:
+  database:
+    image: 'mariadb4'
+    container_name: 'freezer_db3000'
+    restart: always
+    environment:
+      MARIADB_USER: freezer
+      MARIADB_PASSWORD: freezer
+      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: yes
+      MYSQL_DATABASE: freezer_db
+    expose:
+      - 3306
+    networks:
+      - 'nomsympa3000'
+    volumes:
+      - 'project:/var/lib/mysql'
+
+# pour backup : https://techoverflow.net/2020/12/01/how-to-backup-data-from-docker-compose-mariadb-container-using-mysqldump/i
+  jenkinsagent:
+    image: 'jenkinsdocker'
+    container_name: 'jean-kins'
+    restart: always
+    privileged: true
+    user: root
+    networks:
+      - 'nomsympa3000'
+    expose:
+      - 22
+
+  nginx:
+    build:
+      dockerfile: Dockerfile
+    restart: always
+    expose :
+          - 80
+    networks:
+          - 'nomsympa3000'
+    volumes:
+          - 'project:/srv/pythoncgi/'
+
+              # declaration des volumes
+  volumes:
+    project:
