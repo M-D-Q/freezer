@@ -3,7 +3,8 @@ version: '0.1'
 services:
   database:
     build:
-      dockerfile: mariadb/Dockerfile
+      context: ./mariadb
+      dockerfile: Dockerfile
     container_name: 'freezer_db3000'
     restart: always
     environment:
@@ -22,7 +23,8 @@ services:
 # pour backup : https://techoverflow.net/2020/12/01/how-to-backup-data-from-docker-compose-mariadb-container-using-mysqldump/i
   jenkinsagent:
     build:
-      dockerfile: docker/Dockerfile
+      context: ./docker
+      dockerfile: Dockerfile
     container_name: 'jean-kins'
     restart: always
     privileged: true
@@ -34,12 +36,13 @@ services:
       - 22
     volumes:
       - "mariadb:/home/jenkins/workspace/'Better Freezer'/mariadb"
-      - "python:/home/jenkins/workspace/'Better Freezer'/python"
-      - "nginx:/home/jenkins/workspace/'Better Freezer'/nginx"
-      - "proftpd:/home/jenkins/workspace/'Better Freezer'/proftpd"
+      - "python:/home/jenkins/workspace/'Better Freezer'/docker_python"
+      - "nginx:/home/jenkins/workspace/'Better Freezer'/dockernginx"
+      - "musics:/home/jenkins/workspace/'Better Freezer'/proftpd"
   nginx:
     build:
-      dockerfile: nginx/Dockerfile
+      context: ./dockernginx
+      dockerfile: Dockerfile
     container_name: 'nginxcontainer'
     restart: always
     expose :
@@ -47,12 +50,11 @@ services:
     networks:
       net_worth:
         ipv4_address: 10.5.0.2
-    volumes:
-          - 'project:/srv/pythoncgi/'
 
   pythonserv:
     build:
-      dockerfile: python/Dockerfile
+      context: ./docker_python
+      dockerfile: Dockerfile
     container_name: 'pythoncontainer'
     restart: always
     networks:
@@ -67,19 +69,19 @@ services:
       net_worth:
         ipv4_address: 10.5.0.6
     volumes:
-      - '
+      - 'musics:/etc/'
 
               # declaration des volumes
-  volumes:
+volumes:
     mariadb:
     python:
     nginx:
     musics:
       #declaration networks
-  networks:
+networks:
     net_worth:
       driver: bridge
       ipam:
         config:
           - subnet: 10.5.0.0/16
-          - gateway: 10.5.0.1
+            gateway: 10.5.0.1
