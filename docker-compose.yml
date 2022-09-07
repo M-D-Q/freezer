@@ -1,8 +1,9 @@
-version: '3.3'
+version: '0.1'
 
 services:
   database:
-    image: 'mariadb4'
+    build:
+      dockerfile: mariadb/Dockerfile
     container_name: 'freezer_db3000'
     restart: always
     environment:
@@ -13,33 +14,72 @@ services:
     expose:
       - 3306
     networks:
-      - 'nomsympa3000'
+      net_worth:
+        ipv4_address: 10.5.0.5
     volumes:
-      - 'project:/var/lib/mysql'
+      - 'mariadb:/var/lib/mysql'
 
 # pour backup : https://techoverflow.net/2020/12/01/how-to-backup-data-from-docker-compose-mariadb-container-using-mysqldump/i
   jenkinsagent:
-    image: 'jenkinsdocker'
+    build:
+      dockerfile: docker/Dockerfile
     container_name: 'jean-kins'
     restart: always
     privileged: true
     user: root
     networks:
-      - 'nomsympa3000'
+      net_worth:
+        ipv4_address: 10.5.0.3
     expose:
       - 22
-
+    volumes:
+      - "mariadb:/home/jenkins/workspace/'Better Freezer'/mariadb"
+      - "python:/home/jenkins/workspace/'Better Freezer'/python"
+      - "nginx:/home/jenkins/workspace/'Better Freezer'/nginx"
+      - "proftpd:/home/jenkins/workspace/'Better Freezer'/proftpd"
   nginx:
     build:
-      dockerfile: Dockerfile
+      dockerfile: nginx/Dockerfile
+    container_name: 'nginxcontainer'
     restart: always
     expose :
           - 80
     networks:
-          - 'nomsympa3000'
+      net_worth:
+        ipv4_address: 10.5.0.2
     volumes:
           - 'project:/srv/pythoncgi/'
 
+  pythonserv:
+    build:
+      dockerfile: python/Dockerfile
+    container_name: 'pythoncontainer'
+    restart: always
+    networks:
+      net_worth:
+        ipv4_address: 10.5.0.4
+    volumes:
+          - 'nginx:/srv/pythoncgi/'
+  proftpd:
+    image: instantlinux/proftpd
+    container_name: 'proftpdcontainer'
+    networks:
+      net_worth:
+        ipv4_address: 10.5.0.6
+    volumes:
+      - '
+
               # declaration des volumes
   volumes:
-    project:
+    mariadb:
+    python:
+    nginx:
+    musics:
+      #declaration networks
+  networks:
+    net_worth:
+      driver: bridge
+      ipam:
+        config:
+          - subnet: 10.5.0.0/16
+          - gateway: 10.5.0.1
