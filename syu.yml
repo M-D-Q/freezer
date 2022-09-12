@@ -1,6 +1,6 @@
 ---
 - name: Update web servers
-  hosts: control
+  hosts: hosts
   remote_user: root
 
   tasks:
@@ -27,7 +27,7 @@
 
 
 - name: deploy docker compose 1 on host 1
-  hosts: host1
+  hosts: maxime
 
   tasks:
 
@@ -40,7 +40,7 @@
 #################################################
 
 - name: deploy docker compose 2 on host 2
-  hosts: host2
+  hosts: me
 
   tasks:
 
