@@ -62,9 +62,15 @@ services:
         ipv4_address: 10.5.0.4
     volumes:
           - 'nginx:/srv/pythoncgi/'
+
   proftpd:
-    image: instantlinux/proftpd
+    image: bogem/ftp
     container_name: 'proftpdcontainer'
+    environment:
+      FTP_USER: bidon
+      FTP_PASS: bidon
+      PASV_ADRESS: 127.0.0.1
+    restart: always
     networks:
       net_worth:
         ipv4_address: 10.5.0.6
