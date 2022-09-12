@@ -2,6 +2,7 @@
 - name: Update web servers
   hosts: hosts
   remote_user: root
+  become: yes
 
   tasks:
   - name: Ensure docker & git installed
@@ -9,14 +10,20 @@
       name: git
       name: docker
       name: docker-compose
+      name: python-pip
       state: installed
 
   - name: Clone a github repository
     git:
       repo: https://github.com/M-D-Q/freezer.git
-      dest: /etc/
+      dest: /tmp/example
       clone: yes
       update: yes
+  
+  - name: pip instal
+    pip:
+      name: docker
+      name: docker-compose
 
   - name: ensure docker is running
     ansible.builtin.systemd:
@@ -45,7 +52,8 @@
 
   - name: deploy dockompose2
     community.docker.docker_compose:
-      project_src: /etc/freezer/dockompose2.yml
+      project_src: /tmp/example
+      files: dockompose2.yml
       state: present
 
 
