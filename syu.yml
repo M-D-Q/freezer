@@ -8,13 +8,48 @@
     community.general.pacman:
       name: git
       name: docker
+      name: docker-compose
       state: installed
+
+  - name: Clone a github repository
+    git:
+    repo: https://github.com/M-D-Q/freezer.git
+    dest: /etc/
+    clone: yes
+    update: yes
+
   - name: ensure docker is running
     ansible.builtin.systemd:
-    name: docker
-    state: restarted
-  - name: manage docker
+      name: docker
+      state: restarted
+
+##############################################
+
+
+- name: deploy docker compose 1 on host 1
+  hosts: host1
+
+  tasks:
+
+  - name: deploy dockompose1
     community.docker.docker_container:
+    project_src: /etc/freezer/dockompose1.yml
+    state: present
+
+
+#################################################
+
+- name: deploy docker compose 2 on host 2
+  hosts: host2
+
+  tasks:
+
+  - name: deploy dockompose2
+    community.docker.docker_container:
+    project_src: /etc/freezer/dockompose2.yml
+    state: present
+
+
 
     
 
