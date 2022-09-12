@@ -1,0 +1,31 @@
+services:
+  
+  jenkinsagent:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile
+    container_name: 'jean-kins'
+    restart: always
+    privileged: true
+    user: root
+    networks:
+      net_worth:
+        ipv4_address: 10.5.0.3
+    expose:
+      - 22
+    volumes:
+      - "mariadb:/home/jenkins/workspace/'Better Freezer'/mariadb"
+      - "python:/home/jenkins/workspace/'Better Freezer'/docker_python"
+      - "nginx:/home/jenkins/workspace/'Better Freezer'/dockernginx"
+      - "musics:/home/jenkins/workspace/'Better Freezer'/proftpd"
+  nginx:
+    build:
+      context: ./dockernginx
+      dockerfile: Dockerfile
+    container_name: 'nginxcontainer'
+    restart: always
+    expose :
+          - 80
+    networks:
+      net_worth:
+        ipv4_address: 10.5.0.2

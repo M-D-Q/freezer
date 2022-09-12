@@ -1,0 +1,61 @@
+services:
+  database:
+    build:
+      context: ./mariadb
+      dockerfile: Dockerfile
+    container_name: 'freezer_db3000'
+    restart: always
+    environment:
+      MARIADB_USER: freezer
+      MARIADB_PASSWORD: freezer
+      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: yes
+      MYSQL_DATABASE: freezer_db
+    expose:
+      - 3306
+    networks:
+      net_worth:
+        ipv4_address: 10.5.0.5
+    volumes:
+      - 'mariadb:/var/lib/mysql'
+
+  proftpd:
+    image: bogem/ftp
+    container_name: 'proftpdcontainer'
+    environment:
+      FTP_USER: bidon
+      FTP_PASS: bidon
+      PASV_ADRESS: 127.0.0.1
+    restart: always
+    networks:
+      net_worth:
+        ipv4_address: 10.5.0.6
+    volumes:
+      - 'musics:/etc/'
+
+    
+  nginx:
+    build:
+      context: ./dockernginx
+      dockerfile: Dockerfile
+    container_name: 'nginxcontainer'
+    restart: always
+    expose :
+          - 80
+    networks:
+      net_worth:
+        ipv4_address: 10.5.0.2
+
+              # declaration des volumes
+volumes:
+    mariadb:
+    python:
+    nginx:
+    musics:
+      #declaration networks
+networks:
+    net_worth:
+      driver: bridge
+      ipam:
+        config:
+          - subnet: 10.5.0.0/16
+            gateway: 10.5.0.1
