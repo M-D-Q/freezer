@@ -30,7 +30,8 @@ services:
       net_worth:
         ipv4_address: 10.5.0.6
     volumes:
-      - 'musics:/etc/'
+      - 'musics:/srv/share_musics'
+      - 'nginx:/srv/share_nginx'
 
     
   nginx:
@@ -44,7 +45,8 @@ services:
     networks:
       net_worth:
         ipv4_address: 10.5.0.2
-
+    volumes:
+      - 'nginx'
               # declaration des volumes
 volumes:
     mariadb:
