@@ -6,7 +6,7 @@ RUN pacman -Sy
 
 RUN pacman -S --noconfirm openssh jre11-openjdk-headless maven git
 
-RUN useradd -m jenkins
+RUN useradd -m jenkins 
 
 RUN mkdir -p /home/jenkins/workspace/'Better Freezer'
 RUN chown jenkins /home/jenkins/workspace/

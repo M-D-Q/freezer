@@ -12,7 +12,8 @@ ftp -i -n $HOST $PORT << END_SCRIPT
 quote USER $LOGIN
 quote PASS $PASSWORD
 cwd /nginx_share
-put index.cgi
+put /home/jenkins/workspace/dockernginx/index.cgi
+put /home/jenkins/workspace/
 quit
 END_SCRIPT
 
