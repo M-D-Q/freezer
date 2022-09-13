@@ -24,14 +24,14 @@ services:
     environment:
       FTP_USER: bidon
       FTP_PASS: bidon
-      PASV_ADRESS: 127.0.0.1
+      PASV_ADRESS: 10.5.0.6
     restart: always
     networks:
       net_worth:
         ipv4_address: 10.5.0.6
     volumes:
-      - 'musics:/srv/share_musics'
-      - 'nginx:/srv/share_nginx'
+      - 'musics:/home/vsftpd/music_share'
+      - 'nginx:/home/vsftpd/nginx_share'
 
     
   nginx:
@@ -46,7 +46,8 @@ services:
       net_worth:
         ipv4_address: 10.5.0.2
     volumes:
-      - 'nginx'
+      - 'nginx:/srv/pythoncgi'
+      - 'musics:/srv/pythoncgi/musics'
               # declaration des volumes
 volumes:
     mariadb:
