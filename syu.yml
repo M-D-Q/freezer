@@ -55,8 +55,3 @@
       project_src: /tmp/example
       files: dockompose2.yml
       state: present
-
-
-
-    
-
