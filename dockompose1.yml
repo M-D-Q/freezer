@@ -29,3 +29,17 @@ services:
     networks:
       net_worth:
         ipv4_address: 10.5.0.2
+
+volumes:
+    mariadb:
+    python:
+    nginx:
+    musics:
+      #declaration networks
+networks:
+    net_worth:
+      driver: bridge
+      ipam:
+        config:
+          - subnet: 10.5.0.0/16
+            gateway: 10.5.0.1
