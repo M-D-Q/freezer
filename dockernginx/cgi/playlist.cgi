@@ -1,8 +1,11 @@
 #!/usr/bin/python3
 import random
+import socket
 print("Content-Type: text/html")
 print("")
 
+HOST = "10.125.23.61"
+PORT = 1233
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((HOST, PORT))
 msg = "playlist"
@@ -89,7 +92,7 @@ print("""
 			<div class="clearfix"></div>
 			<div class="row playlist-area">
 			""")
-playlists = ["Comptines pour enfants", "miaulements de chats best collection"]
+#playlists = ["Comptines pour enfants", "miaulements de chats best collection"]
 playlists = playlist_text.split(",")
 for playlist_title in playlists:
 	random_images = random.randint(1,16)
