@@ -1,3 +1,17 @@
+#!/usr/bin/python3
+import random
+print("Content-Type: text/html")
+print("")
+
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect((HOST, PORT))
+msg = "playlist"
+s.send(msg.encode())
+playlist_text = s.recv(4096).decode()
+#TODO: modify database.py to send something easily readable
+s.close()
+
+print("""
 <!DOCTYPE html>
 <html lang="zxx">
 <head>
@@ -40,7 +54,6 @@
 		<a href="index.html" class="site-logo">
 			<img src="img/logo.png" alt="">
 		</a>
-		<!--
 		<div class="header-right">
 			<a href="#" class="hr-btn">Help</a>
 			<span>|</span>
@@ -56,122 +69,59 @@
 				<ul class="sub-menu">
 					<li><a href="category.html">Category</a></li>
 					<li><a href="playlist.html">Playlist</a></li>
-
+					<li><a href="artist.html">Artist</a></li>
+					<li><a href="blog.html">Blog</a></li>
+					<li><a href="contact.html">Contact</a></li>
 				</ul>
 			</li>
 			<li><a href="blog.html">News</a></li>
 			<li><a href="contact.html">Contact</a></li>
 		</ul>
-		-->
 	</header>
 	<!-- Header section end -->
 
-	<!-- Category section -->
-	<!--
-	<section class="category-section spad">
+	<!-- Playlist section -->
+	<section class="playlist-section spad">
 		<div class="container-fluid">
 			<div class="section-title">
-				<h2>Live Concert Playlist</h2>
+				<h2>Playlists</h2>
+			</div>                                            
+			<div class="clearfix"></div>
+			<div class="row playlist-area">
+			""")
+playlists = ["Comptines pour enfants", "miaulements de chats best collection"]
+playlists = playlist_text.split(",")
+for playlist_title in playlists:
+	random_images = random.randint(1,16)
+	print(f"""
+	<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
+		<div class="playlist-item">
+			<img src="img/playlist/{random_images}.jpg" alt="">
+			<h5>{playlist_title}</h5>
+		</div>
+	</div>
+	""")
+print("""
 			</div>
-			<div class="container">
-				<div class="category-links">
-					<a href="" class="active">Genres</a>
-					<a href="">Artists</a>
-					<a href="">All Playlist</a>
-				</div>
-			</div>
-			<div class="category-items">
-				<div class="row">
-					<div class="col-md-4">
-						<div class="category-item">
-							<img src="img/playlist/9.jpg" alt="">
-							<div class="ci-text">
-								<h4>Micke Smith</h4>
-								<p>Live from Madrid</p>
-							</div>
-							<a href="artist.html" class="ci-link"><i class="fa fa-play"></i></a>
-						</div>
-					</div>
-		<p>Live from Madrid</p>
-							</div>
-							<a href="artist.html" class="ci-link"><i class="fa fa-play"></i></a>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="category-item">
-							<img src="img/playlist/7.jpg" alt="">
-							<div class="ci-text">
-								<h4>Micke Smith</h4>
-								<p>Live from Madrid</p>
-							</div>
-							<a href="artist.html" class="ci-link"><i class="fa fa-play"></i></a>
-						</div>
+		</div>
+	</section>
+	<!-- Playlist section end -->
+
+	<!-- Help section end -->
+	<section class="help-section spad pt-0">
+		<div class="container">				
+				<div class="col-lg-6">
+					<div class="d-flex h-100 align-items-end">
+						<form class="search-form">
+							<input type="text" placeholder="Hit it">
+							<button>Search</button>
+						</form>
 					</div>
 				</div>
 			</div>
 		</div>
-
-	</section>-->
-	<!-- Songs section  -->
-	<section class="songs-section">
-		<div class="container">
-			<!-- song  -->
-			<div class="song-item">
-				<div class="row">
-					<div class="col-lg-4">
-						<div class="song-info-box">
-							<img src="img/songs/1.jpg" alt="">
-							<div class="song-info">
-								<h4>Jennifer Brown</h4>
-								<p>One Night in Ibiza</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-6">
-						<div class="single_player_container">
-							<div class="single_player">
-								<div class="jp-jplayer jplayer" data-ancestor=".jp_container_1" data-url="music-files/1.mp3"></div>
-								<div class="jp-audio jp_container_1" role="application" aria-label="media player">
-									<div class="jp-gui jp-interface">
-
-										<!-- Player Controls -->
-										<div class="player_controls_box">
-											<button class="jp-prev player_button" tabindex="0"></button>
-											<button class="jp-play player_button" tabindex="0"></button>
-											<button class="jp-next player_button" tabindex="0"></button>
-											<button class="jp-stop player_button" tabindex="0"></button>
-										</div>
-										<!-- Progress Bar -->
-										<div class="player_bars">
-											<div class="jp-progress">
-												<div class="jp-seek-bar">
-													<div>
-														<div class="jp-play-bar"><div class="jp-current-time" role="timer" aria-label="time">0:00</div></div>
-													</div>
-												</div>
-											</div>
-											<div class="jp-duration ml-auto" role="timer" aria-label="duration">00:00</div>
-										</div>
-									</div>
-									<div class="jp-no-solution">
-										<span>Update Required</span>
-										To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-2">
-						<div class="songs-links">
-							<a href=""><img src="img/icons/p-1.png" alt=""></a>
-							<a href=""><img src="img/icons/p-2.png" alt=""></a>
-							
-					</div>
-				</div>
-			</div>
-			
 	</section>
-	<!-- Songs section end -->
+	<!-- Help section end -->
 
 	<!-- Footer section -->
 	<footer class="footer-section">
@@ -239,9 +189,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	<script src="js/mixitup.min.js"></script>
 	<script src="js/main.js"></script>
 
-	<!-- Audio Player and Initialization -->
-	<script src="js/jquery.jplayer.min.js"></script>
-	<script src="js/jplayerInit.js"></script>
-
 	</body>
 </html>
+""")

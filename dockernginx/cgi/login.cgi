@@ -77,7 +77,7 @@ span.psw {
 
 <form action="form-submit.cgi" method="post">
   <div class="imgcontainer">
-    <img src="img_avatar2.png" alt="Avatar" class="avatar">
+    <img src="tomjerry.jpg" alt="Avatar" class="avatar">
   </div>
 
   <div class="container">
