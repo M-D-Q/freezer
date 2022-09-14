@@ -1,8 +1,7 @@
 ---
 - name: Update web servers
   hosts: hosts
-  remote_user: root
-  become: yes
+    #  become: yes
 
   tasks:
   - name: Ensure docker & git installed
@@ -19,7 +18,7 @@
       dest: /tmp/example
       clone: yes
       update: yes
-  
+
   - name: pip instal
     pip:
       name: docker
@@ -34,7 +33,7 @@
 
 - name: deploy docker compose 1 on host 1
   hosts: maxime
-
+  become: yes
   tasks:
 
   - name: deploy dockompose1
@@ -47,7 +46,7 @@
 
 - name: deploy docker compose 2 on host 2
   hosts: me
-
+  become: yes
   tasks:
 
   - name: deploy dockompose2

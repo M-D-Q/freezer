@@ -12,4 +12,8 @@ RUN pip install pyaudio
 RUN pip install mariadb
 RUN pip install pytube
 
+EXPOSE 1233
+CMD /usr/bin/bash
+RUN python
+CMD tail -f /dev/null
 #RUN python /betterfreezer/server.py
