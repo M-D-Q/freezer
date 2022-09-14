@@ -8,7 +8,7 @@ services:
     environment:
       MARIADB_USER: freezer
       MARIADB_PASSWORD: freezer
-      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: yes
+        #      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: yes
       MYSQL_DATABASE: freezer_db
     expose:
       - 3306
@@ -33,7 +33,7 @@ services:
       - 'musics:/home/vsftpd/music_share'
       - 'nginx:/home/vsftpd/nginx_share'
 
-    
+
   nginx:
     build:
       context: ./dockernginx
