@@ -1,5 +1,5 @@
 services:
-  
+
   jenkinsagent:
     build:
       context: ./docker
@@ -14,10 +14,10 @@ services:
     expose:
       - 22
     volumes:
-      - "mariadb:/home/jenkins/workspace/'Better Freezer'/mariadb"
-      - "python:/home/jenkins/workspace/'Better Freezer'/docker_python"
-      - "nginx:/home/jenkins/workspace/'Better Freezer'/dockernginx"
-      - "musics:/home/jenkins/workspace/'Better Freezer'/proftpd"
+      - "mariadb:/home/jenkins/workspace/Better_Freezer/mariadb"
+      - "python:/home/jenkins/workspace/Better_Freezer/docker_python"
+      - "nginx:/home/jenkins/workspace/Better_Freezer/dockernginx"
+      - "musics:/home/jenkins/workspace/Better_Freezer/proftpd"
   nginx:
     build:
       context: ./dockernginx
