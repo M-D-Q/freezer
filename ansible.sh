@@ -7,4 +7,4 @@ ssh-add ~/.ssh/id_rsa
 
 ##################
 
-ansible-playbook syu.yml
+ansible-playbook syu.yml -vv

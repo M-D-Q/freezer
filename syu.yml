@@ -1,7 +1,7 @@
 ---
 - name: Update web servers
   hosts: hosts
-    #  become: yes
+  become: yes
 
   tasks:
   - name: Ensure docker & git installed
@@ -12,12 +12,17 @@
       name: python-pip
       state: installed
 
-  - name: Clone a github repository
-    git:
-      repo: https://github.com/M-D-Q/freezer.git
-      dest: /tmp/example
-      clone: yes
-      update: yes
+        #- name: Clone a github repository
+    #git:
+      # repo: https://github.com/M-D-Q/freezer.git
+      #repo: https://framagit.org/MDQ/test_nginx_jenkins.git
+        #dest: /tmp/example
+        #clone: yes
+        # update: yes
+
+  - name: clone
+    ansible.builtin.shell:
+      cmd: (cd /tmp/example && git clone https://github.com/M-D-Q/freezer.git) || (cd /tmp/example/freezer && git pull)
 
   - name: pip instal
     pip:
@@ -27,7 +32,7 @@
   - name: ensure docker is running
     ansible.builtin.systemd:
       name: docker
-      state: restarted
+      state: started
 
 ##############################################
 
@@ -38,7 +43,8 @@
 
   - name: deploy dockompose1
     community.docker.docker_compose:
-      project_src: /etc/freezer/dockompose1.yml
+      project_src: /tmp/example/freezer
+      files: dockompose1.yml
       state: present
 
 
@@ -51,6 +57,6 @@
 
   - name: deploy dockompose2
     community.docker.docker_compose:
-      project_src: /tmp/example
+      project_src: /tmp/example/freezer
       files: dockompose2.yml
       state: present
